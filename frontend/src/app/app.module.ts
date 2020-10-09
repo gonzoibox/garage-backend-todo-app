@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ClickOutsideDirective } from '../../../frontend/src/app/components/todo-list/directives/clickoutside.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent
+    TodoListComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

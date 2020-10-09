@@ -31,8 +31,7 @@ export class TodoListComponent implements OnInit {
   }
 
   cancelEditTitle(){
-    this.title = '';
-    this.onEditTitle();
+    this.editTitleState = false;
   }
 
   onUpdateTitle(): void {
@@ -69,7 +68,6 @@ export class TodoListComponent implements OnInit {
         this.titleList = [];
         this.title = '';
       });
-      this.onEditTitle();
   }
 
   onCreateTodo(): void {

@@ -1,5 +1,5 @@
 <div class="todo-list">
-  <div class="todo-list___header">
+  <div class="todo-list___header" (clickOutside)="cancelEditTitle()">
     <div class="todo-list___header-calendar">
       <div class="todo-list___header-calendar--icon">
         <svg class="icon">
@@ -8,20 +8,22 @@
       </div>
       <div *ngIf="!editTitleState" class="todo-list___header-calendar-list-name">{{ title }}</div>
       <form action="#" (ngSubmit)="onUpdateTitle()" *ngIf="editTitleState" class="todo-list___header-calendar-list-name--form">
-        <input class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
+        <input id="fname" class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
         type="text">
         <button type="submit">ok</button>
-        <button (click)="cancelEditTitle()" type="button">no</button>
+        <button (click)="onEditTitle()" type="button">no</button>
       </form>
     </div>
     <div class="todo-list___header-controls">
       <span class="todo-list___header-controls--edit">
-        <svg (click)="onEditTitle()" class="icon">
-          <use xlink:href="../assets/icons/sprite.svg#icon-pencil1"></use>
-        </svg>
+        <label for="fname">
+          <svg (click)="onEditTitle()" class="icon">
+           <use xlink:href="../assets/icons/sprite.svg#icon-pencil1"></use>
+          </svg>
+        </label>
       </span>
       <span class="todo-list___header-controls--delete">
-        <svg  (click)="onDeleteTitle()" class="icon">
+        <svg (click)="onDeleteTitle()" class="icon">
           <use xlink:href="../assets/icons/sprite.svg#icon-bin"></use>
         </svg>
       </span>
@@ -67,7 +69,5 @@
         </span>
       </div>
     </li>
-
   </ul>
-
 </div>
