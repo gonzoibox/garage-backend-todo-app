@@ -10,8 +10,8 @@
       <form action="#" (ngSubmit)="onUpdateTitle()" *ngIf="editTitleState" class="todo-list___header-calendar-list-name--form">
         <input id="fname" class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
         type="text">
-        <button type="submit">ok</button>
-        <button (click)="onEditTitle()" type="button">no</button>
+        <button type="submit">OK</button>
+        <button (click)="onEditTitle()" type="button">NO</button>
       </form>
     </div>
     <div class="todo-list___header-controls">
@@ -44,13 +44,16 @@
 
   <ul cdkDropList (cdkDropListDropped)="drop($event)" class="todo-list__tasks">
     <li cdkDrag *ngFor="let item of todoList" class="todo-list__tasks-item">
-      <input class="check-box" 
-      type="checkbox" 
-      name="isCompleted" 
-      (change)="onComplete(item)"
-      [checked]="item.isCompleted">
-      <span *ngIf="!item.isCompleted">{{ item.todo }}</span>
-      <span *ngIf="item.isCompleted"><del>{{ item.todo }}</del></span>
+      <div>
+        <input class="check-box" 
+        type="checkbox" 
+        name="isCompleted" 
+        (change)="onComplete(item)"
+        [checked]="item.isCompleted">
+        <span *ngIf="!item.isCompleted">{{ item.todo }}</span>
+        <span *ngIf="item.isCompleted"><del>{{ item.todo }}</del></span>
+      </div>
+      
       <div class="todo-list__tasks-controls">
         <span class="todo-list__tasks-controls--move">
           <svg class="icon" viewBox="0 0 20 20" width="20" height="20">
