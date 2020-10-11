@@ -12,10 +12,13 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 export class TodoListComponent implements OnInit {
   public todoList: Todo[];
   public todo = '';
+  public changedTodo = '';
   public titleList: Title[];
   public title = '';
   public titleId: number;
   public editTitleState = false;
+  public editTodoState = false;
+  public editableTodo: number;
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.todoList, event.previousIndex, event.currentIndex);
@@ -30,8 +33,22 @@ export class TodoListComponent implements OnInit {
     this.editTitleState = !this.editTitleState;
   }
 
+  onEditTodo(todoId) {
+    this.editTodoState = !this.editTodoState;
+    this.editableTodo = todoId;
+    console.log(todoId);
+  }
+
+  offEditTodo() {
+    this.editTodoState = !this.editTodoState;
+  }
+
   cancelEditTitle(){
     this.editTitleState = false;
+  }
+
+  cancelEditTodo() {
+    this.editTodoState = false;
   }
 
   onUpdateTitle(): void {
@@ -68,6 +85,25 @@ export class TodoListComponent implements OnInit {
         this.titleList = [];
         this.title = '';
       });
+  }
+
+  onUpdateTodo(todoId, todoIndex): void {
+    if(this.changedTodo) {
+      this.httpClient.patch<Todo>(
+        'http://localhost:3000/rest/todo/' + todoId,
+        {
+         todo: this.changedTodo
+        }
+      ).subscribe(todo => {
+          this.changedTodo = todo.todo;
+          this.todoList[todoIndex].todo = this.changedTodo;
+
+        })
+        this.changedTodo = '';
+        this.offEditTodo();
+    } 
+   
+      
   }
 
   onCreateTodo(): void {

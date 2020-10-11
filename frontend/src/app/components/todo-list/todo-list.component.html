@@ -8,7 +8,7 @@
       </div>
       <div *ngIf="!editTitleState" class="todo-list___header-calendar-list-name">{{ title }}</div>
       <form action="#" (ngSubmit)="onUpdateTitle()" *ngIf="editTitleState" class="todo-list___header-calendar-list-name--form">
-        <input id="fname" class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
+        <input id="list-name" class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
         type="text">
         <button type="submit">OK</button>
         <button (click)="onEditTitle()" type="button">NO</button>
@@ -16,7 +16,7 @@
     </div>
     <div class="todo-list___header-controls">
       <span class="todo-list___header-controls--edit">
-        <label for="fname">
+        <label for="list-name">
           <svg (click)="onEditTitle()" class="icon">
            <use xlink:href="../assets/icons/sprite.svg#icon-pencil1"></use>
           </svg>
@@ -43,7 +43,7 @@
   </div>
 
   <ul cdkDropList (cdkDropListDropped)="drop($event)" class="todo-list__tasks">
-    <li cdkDrag *ngFor="let item of todoList" class="todo-list__tasks-item">
+    <li cdkDrag *ngFor="let item of todoList; let i = index" class="todo-list__tasks-item">
       <div>
         <input class="check-box" 
         type="checkbox" 
@@ -52,6 +52,12 @@
         [checked]="item.isCompleted">
         <span *ngIf="!item.isCompleted">{{ item.todo }}</span>
         <span *ngIf="item.isCompleted"><del>{{ item.todo }}</del></span>
+        <form action="#" (ngSubmit)="onUpdateTodo(item.id, i)" *ngIf="editTodoState && i === editableTodo" class="todo-list__tasks-item--form">
+          <input id="{{ i }}" placeholder={{item.todo}} class="todo-list__tasks-item--form--input" [(ngModel)]="changedTodo" [ngModelOptions]="{standalone: true}"
+          type="text">
+          <button type="submit">OK</button>
+          <button (click)="offEditTodo()" type="button">NO</button>
+        </form>
       </div>
       
       <div class="todo-list__tasks-controls">
@@ -61,9 +67,11 @@
           </svg>
         </span>
         <span class="todo-list__tasks-controls--edit">
-          <svg class="icon" viewBox="0 0 20 20" width="20" height="20">
-            <use xlink:href="../assets/icons/sprite.svg#icon-pencil1"></use>
-          </svg>
+          <label for="{{ i }}">
+            <svg (click)="onEditTodo(i)" class="icon" viewBox="0 0 20 20" width="20" height="20">
+              <use xlink:href="../assets/icons/sprite.svg#icon-pencil1"></use>
+            </svg>
+          </label>
         </span>
         <span (click)="onRemoveTodo(item)" class="todo-list__tasks-controls--delete">
           <svg class="icon" viewBox="0 0 20 20" width="20" height="20">
