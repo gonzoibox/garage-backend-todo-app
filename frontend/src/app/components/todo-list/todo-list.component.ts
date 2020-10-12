@@ -18,10 +18,11 @@ export class TodoListComponent implements OnInit {
   public titleId: number;
   public editTitleState = false;
   public editTodoState = false;
-  public editableTodo: number;
+  public editableTodoId: number;
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.todoList, event.previousIndex, event.currentIndex);
+    console.log(event.previousIndex, event.currentIndex);
   }
 
   private httpClient: HttpClient;
@@ -33,22 +34,8 @@ export class TodoListComponent implements OnInit {
     this.editTitleState = !this.editTitleState;
   }
 
-  onEditTodo(todoId) {
-    this.editTodoState = !this.editTodoState;
-    this.editableTodo = todoId;
-    console.log(todoId);
-  }
-
-  offEditTodo() {
-    this.editTodoState = !this.editTodoState;
-  }
-
   cancelEditTitle(){
     this.editTitleState = false;
-  }
-
-  cancelEditTodo() {
-    this.editTodoState = false;
   }
 
   onUpdateTitle(): void {
@@ -72,8 +59,8 @@ export class TodoListComponent implements OnInit {
         }
       ).subscribe(title => {
           this.title = title.title;
+          this.onEditTitle();
         })
-        this.onEditTitle();
     }
   }
 
@@ -87,6 +74,16 @@ export class TodoListComponent implements OnInit {
       });
   }
 
+  onEditTodo(todoId: number) {
+    this.editTodoState = !this.editTodoState;
+    this.editableTodoId = todoId;
+  }
+
+  offEditTodo() {
+    this.editTodoState = !this.editTodoState;
+    this.editableTodoId = null;
+  }
+
   onUpdateTodo(todoId, todoIndex): void {
     if(this.changedTodo) {
       this.httpClient.patch<Todo>(
@@ -97,13 +94,10 @@ export class TodoListComponent implements OnInit {
       ).subscribe(todo => {
           this.changedTodo = todo.todo;
           this.todoList[todoIndex].todo = this.changedTodo;
-
+          this.changedTodo = '';
+          this.offEditTodo();
         })
-        this.changedTodo = '';
-        this.offEditTodo();
-    } 
-   
-      
+    }
   }
 
   onCreateTodo(): void {
