@@ -7,8 +7,8 @@
         </svg>
       </div>
       <div *ngIf="!editTitleState" class="todo-list___header-calendar-list-name">{{ title }}</div>
-      <form action="#" (ngSubmit)="onUpdateTitle()" *ngIf="editTitleState" class="todo-list___header-calendar-list-name--form">
-        <input id="list-name" class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
+      <form action="#" (ngSubmit)="onUpdateTitle(newTitle)" *ngIf="editTitleState" class="todo-list___header-calendar-list-name--form">
+        <input id="list-name" class="todo-list___header-calendar-list-name--form--input" [(ngModel)]="newTitle" [ngModelOptions]="{standalone: true}"
         type="text">
         <button type="submit">OK</button>
         <button (click)="onEditTitle()" type="button">NO</button>
@@ -31,13 +31,15 @@
   </div>
 
   <div class="todo-list__input">
-    <span class="todo-list__input--plus">
-      <svg class="icon">
-        <use xlink:href="../assets/icons/sprite.svg#icon-plus"></use>
-      </svg>
-    </span>
+    <label for="add-todo">
+      <span class="todo-list__input--plus">
+        <svg class="icon">
+          <use xlink:href="../assets/icons/sprite.svg#icon-plus"></use>
+        </svg>
+      </span>
+    </label>
     <form (ngSubmit)="onCreateTodo()" action="#" class="todo-list__input--form">
-      <input [(ngModel)]="todo" [ngModelOptions]="{standalone: true}" type="text" class="todo-list__input--form--input-todo" placeholder="Start typing here to create a task...">
+      <input [(ngModel)]="todo" id="add-todo" [ngModelOptions]="{standalone: true}" type="text" class="todo-list__input--form--input-todo" placeholder="Start typing here to create a task...">
       <button [disabled]="!todo" type="submit" class="todo-list__input--form--add-button">Add Task</button>
     </form>
   </div>

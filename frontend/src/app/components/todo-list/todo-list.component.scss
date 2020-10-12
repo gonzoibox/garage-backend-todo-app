@@ -28,7 +28,7 @@
       &-list-name {
         color: #fff;
         font-size: 1.5rem;
-        font-weight: 400;
+        font-weight: 600;
 
         &--form {
           position: absolute;
@@ -71,6 +71,10 @@
     &--plus {
       margin: 0 1.5rem 0 1.5rem;
       flex: 0 0 auto;
+
+      & svg {
+        fill: green;
+      }
     }
 
     &--form {

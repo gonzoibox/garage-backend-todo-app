@@ -15,6 +15,7 @@ export class TodoListComponent implements OnInit {
   public changedTodo = '';
   public titleList: Title[];
   public title = '';
+  public newTitle = '';
   public titleId: number;
   public editTitleState = false;
   public editTodoState = false;
@@ -38,24 +39,24 @@ export class TodoListComponent implements OnInit {
     this.editTitleState = false;
   }
 
-  onUpdateTitle(): void {
+  onUpdateTitle(newTitle): void {
     if(this.titleList.length === 0) {
       this.httpClient.post<Title>(
         'http://localhost:3000/rest/title/',
         {
-         title: this.title
+         title: newTitle
         }
-      ).subscribe(title => {
-          this.title = title.title;
-          this.titleId = title.id;
-          this.titleList.push(title);
+      ).subscribe(newTitle => {
+          this.title = newTitle.title;
+          this.titleId = newTitle.id;
+          this.titleList.push(newTitle);
         })
         this.onEditTitle();
     } else {
       this.httpClient.patch<Title>(
         'http://localhost:3000/rest/title/' + this.titleId,
         {
-         title: this.title
+         title: newTitle
         }
       ).subscribe(title => {
           this.title = title.title;
