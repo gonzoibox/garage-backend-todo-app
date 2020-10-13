@@ -8,9 +8,6 @@
   "author": "anton davidovich",
   "license": "MIT",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "npm run clean && nest build",
-    "clean": "rimraf dist",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
